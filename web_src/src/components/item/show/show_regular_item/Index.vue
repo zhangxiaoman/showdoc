@@ -55,7 +55,7 @@
           
         </el-container>
 
-        <div class="page-bar" v-show="show_page_bar && item_info.ItemPermn && item_info.is_archived < 1 " >
+        <div class="page-bar" style="right: 100px;" v-show="show_page_bar && item_info.ItemPermn && item_info.is_archived < 1 " >
           <PageBar v-if="page_id" :page_id="page_id" :item_id='item_info.item_id' :item_info='item_info'  :page_info="page_info"></PageBar>
         </div>
         

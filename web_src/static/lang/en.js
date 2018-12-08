@@ -5,6 +5,7 @@ exports.default = {
     'demo' : 'Demo',
     'index_login_or_register' : 'Login / Register',
     'my_item' : 'My items',
+    'public_item' : 'Public Item',
     'section_title1' : 'ShowDoc',
     'section_description1' : ' A tool greatly applicable for an IT team',
     'section_title2' : 'API Document',

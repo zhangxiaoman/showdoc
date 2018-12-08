@@ -181,14 +181,20 @@ class ItemController extends BaseController {
                 $member_item_ids[] = $value['item_id'] ;
             }
         }
-        $items  = D("Item")->field("item_id,item_name,item_domain,item_type,last_update_time,item_description,is_del")->where("uid = '$login_user[uid]' or item_id in ( ".implode(",", $member_item_ids)." ) ")->order("item_id asc")->select();
-        
+
+        $items  = D("Item")->field("item_id,item_name,item_domain,item_type,last_update_time,item_description,is_del,uid")->where("uid = '$login_user[uid]' or item_id in ( ".implode(",", $member_item_ids)." ) ")->order("item_id asc")->select();
+
         
         foreach ($items as $key => $value) {
             //如果项目已标识为删除
             if ($value['is_del'] == 1) {
                 unset($items[$key]);
             }
+            $items[$key]['show_setting'] = 0;
+            if ($login_user['uid'] == $value['uid']) {
+                $items[$key]['show_setting'] = 1;
+            }
+            unset($items[$key]['uid']);
         }
         $items = array_values($items);
         //读取需要置顶的项目
@@ -524,6 +530,7 @@ class ItemController extends BaseController {
             "item_description" => $item_description ,
             "item_domain" => $item_domain ,
             "item_type" => $item_type ,
+            'is_archived' => 0,
             "addtime" =>time()
             );
         $item_id = D("Item")->add($insert);
@@ -547,6 +554,25 @@ class ItemController extends BaseController {
             $this->sendError(10101);
         }
         
+    }
+
+    // 所有公开的项目
+    public function all(){
+
+        $items  = D("Item")->field("item_id,item_name,item_domain,item_type,last_update_time,item_description,is_del")
+            ->where("password == ''")
+            ->order("item_id asc")
+            ->select();
+        foreach ($items as $key => $value) {
+            //如果项目已标识为删除
+            if ($value['is_del'] == 1) {
+                unset($items[$key]);
+            }
+        }
+        $items = array_values($items);
+        $items = $items ? array_values($items) : array();
+        $this->sendResult($items);
+
     }
 
 

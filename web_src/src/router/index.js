@@ -7,6 +7,7 @@ import UserRegister from '@/components/user/Register'
 import UserResetPassword from '@/components/user/ResetPassword'
 import ResetPasswordByUrl from '@/components/user/ResetPasswordByUrl'
 import ItemIndex from '@/components/item/Index'
+import ItemAll from '@/components/item/All'
 import ItemAdd from '@/components/item/Add'
 import ItemPassword from '@/components/item/Password'
 import ItemShow from '@/components/item/show/Index'
@@ -60,6 +61,11 @@ export default new Router({
       path: '/item/index',
       name: 'ItemIndex',
       component: ItemIndex
+    },
+    {
+      path: '/item/all',
+      name: 'ItemAll',
+      component: ItemAll
     },
     {
       path: '/item/add',

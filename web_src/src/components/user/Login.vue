@@ -4,14 +4,14 @@
 
     <el-container>
           <el-card class="center-card">
-            <el-form  status-icon  label-width="0px" class="demo-ruleForm" @keyup.enter.native="onSubmit">
+            <el-form  status-icon  label-width="0px" class="demo-ruleForm" >
               <h2>{{$t("login")}}</h2>
               <el-form-item label="" >
                 <el-input type="text" auto-complete="off" :placeholder="$t('username_description')" v-model="username"></el-input>
               </el-form-item>
 
               <el-form-item label="" >
-                <el-input type="password" auto-complete="off" v-model="password" :placeholder="$t('password')"></el-input>
+                <el-input type="password" auto-complete="off" @keyup.enter.native="onSubmit" v-model="password" :placeholder="$t('password')"></el-input>
               </el-form-item>
 
               <el-form-item label="" v-if="show_v_code">
@@ -59,7 +59,9 @@ export default {
   },
   methods: {
       onSubmit() {
-          if (this.is_show_alert) { return ;};
+          if (this.is_show_alert) {
+              return ;
+          };
           //this.$message.success(this.username);
           var that = this ;
           var url = DocConfig.server+'/api/user/login';
@@ -67,6 +69,10 @@ export default {
           params.append('username', this.username);
           params.append('password', this.password);
           params.append('v_code', this.v_code);
+
+          if (!this.username || !this.password) {
+                return ;
+          };
 
           that.axios.post(url, params)
             .then(function (response) {

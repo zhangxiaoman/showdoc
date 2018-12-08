@@ -3,19 +3,19 @@
       <ul class="page-bar">
         <li>
             <el-tooltip class="item" effect="dark" :content="$t('edit_page')" placement="right">
-                  <el-button type="text" icon="el-icon-edit" @click="edit_page"></el-button>
+                  <el-button type="text" icon="el-icon-edit" style="font-size: 30px;" @click="edit_page"></el-button>
             </el-tooltip>
         </li>
         <li>
             <el-tooltip class="item" effect="dark" :content="$t('share_page')" placement="right">
-                  <el-button type="text" icon="el-icon-share" @click="share_page"></el-button>
+                  <el-button type="text" style="font-size: 30px;" icon="el-icon-share" @click="share_page"></el-button>
             </el-tooltip>
 
           </li>
         <li>
           <el-dropdown @command="dropdown_callback">
             <span class="el-dropdown-link">
-              <i class="el-icon-arrow-down el-icon--down"></i>
+              <i class="el-icon-arrow-down  el-icon--down" style="font-size: 30px;"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <router-link :to="'/page/edit/'+item_id+'/0?copy_page_id='+page_id"><el-dropdown-item>{{$t('copy')}}</el-dropdown-item></router-link>
@@ -62,7 +62,6 @@
 
 <style scoped>
   .page-bar{
-   
   }
 
 </style>

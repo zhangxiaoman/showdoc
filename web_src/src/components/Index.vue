@@ -19,7 +19,8 @@
               <p><span v-html="$t('section_description1')"></span></p>
               <p>
                   <a class="el-button " href="https://www.showdoc.cc/demo" target="_blank">{{$t("demo")}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <a class="el-button" href="https://www.showdoc.cc/help" target="_blank" >{{$t("help")}}&nbsp;</i></a>
+                  <a class="el-button" href="https://www.showdoc.cc/help" target="_blank" >{{$t("help")}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a class="el-button" href="#/item/all" target="_self" >{{$t("public_item")}}</a>
               </p>
           </div>
 
@@ -105,18 +106,18 @@ export default {
         this.height = winHeight+'px' ;
       }
   },
-  mounted () {
-    var that = this ;
-    this.getHeight();
-    that.link = '/user/login';
-    that.link_text = that.$t("index_login_or_register");
-    this.get_user_info(function(response){
-      if (response.data.error_code === 0 ) {
-        that.link = '/item/index';
-        that.link_text = that.$t("my_item");
-      }
-    });
-  }
+    mounted() {
+        var that = this;
+        this.getHeight();
+        that.link = '/user/login';
+        that.link_text = that.$t("index_login_or_register");
+        this.get_user_info(function (response) {
+            if (response.data.error_code === 0) {
+                that.link = '/item/index';
+                that.link_text = that.$t("my_item");
+            }
+        });
+    }
 }
 </script>
 

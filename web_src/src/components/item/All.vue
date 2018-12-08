@@ -11,17 +11,15 @@
           </div>
           <div class="header-btn-group pull-right">
             <el-button type="text"  @click="feedback">{{$t("feedback")}}</el-button>
-            <router-link to="/team/index" >&nbsp;&nbsp;&nbsp;{{$t('team_mamage')}}</router-link>
-            <router-link to="/item/all" >&nbsp;&nbsp;&nbsp;{{$t('public_item')}}</router-link>
-            <router-link to="/admin/index" v-if="isAdmin">&nbsp;&nbsp;&nbsp;{{$t('background')}}</router-link>
-            &nbsp;&nbsp;&nbsp;
-            <el-dropdown @command="dropdown_callback">
+            <router-link to="/item/index" v-if="isLogin" >{{$t('my_item')}}</router-link>
+            <router-link to="/user/login" v-show="showLogin" >{{$t('index_login_or_register')}}</router-link>
+            <el-dropdown @command="dropdown_callback" v-if="isLogin">
               <span class="el-dropdown-link">
                 {{$t("more")}}<i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item><router-link to="/user/setting">{{$t("personal_setting")}}</router-link></el-dropdown-item>
-                <el-dropdown-item :command="logout">{{$t("logout")}}</el-dropdown-item>
+                <el-dropdown-item v-if="isLogin"><router-link to="/user/setting">{{$t("personal_setting")}}</router-link></el-dropdown-item>
+                <el-dropdown-item :command="logout" v-if="isLogin">{{$t("logout")}}</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
 
@@ -38,22 +36,9 @@
 
               <li class=" text-center"  v-for="item in itemList">
                 <router-link class="thumbnail item-thumbnail"  :to="'/' +  (item.item_domain ? item.item_domain:item.item_id )" title="">
-                  <span class="item-setting " @click.prevent="click_item_setting(item.item_id)" :title="$t('item_setting')" v-if="item.show_setting ==1" >
-                    <i class="el-icon-setting"></i>
-                  </span>
-                  <span class="item-top " @click.prevent="click_item_top(item.item_id,item.top)" :title="item.top ? $t('cancel_item_top'):$t('item_top')" >
-                    <i :class="item_top_class(item.top)"></i>
-                  </span>
                   <p class="my-item">{{item.item_name}}</p>
                 </router-link>
               </li>
-
-              <li class=" text-center"  >
-                <router-link class="thumbnail item-thumbnail"  to="/item/add" title="">
-                  <p class="my-item">{{$t('new_item')}}<i class="el-icon-plus"></i></p>
-                </router-link>
-              </li>
-
           </ul>
         </div>
 
@@ -161,17 +146,19 @@ if (typeof window !== 'undefined') {
   var $s = require('scriptjs');
 }
 export default {
-  data() {
-    return {
-      currentDate: new Date(),
-      itemList:{},
-      isAdmin:false
-    };
-  },
+    data() {
+        return {
+            currentDate: new Date(),
+            itemList: {},
+            isAdmin: false,
+            isLogin: false,
+            showLogin: true,
+        };
+    },
   methods:{
     get_item_list(){
         var that = this ;
-        var url = DocConfig.server+'/api/item/myList';
+        var url = DocConfig.server+'/api/item/all';
 
         var params = new URLSearchParams();
 
@@ -275,12 +262,14 @@ export default {
     
     user_info(){
         var that = this ;
-        this.get_user_info(function(response){
-          if (response.data.error_code === 0 ) {
-            if (response.data.data.groupid == 1 ) {
-              that.isAdmin = true ;
-            };
-          }
+        this.get_user_info(function (response) {
+            if (response.data.error_code === 0) {
+                that.isLogin = true;
+                that.showLogin = false;
+                if (response.data.data.groupid == 1) {
+                    that.isAdmin = true;
+                }
+            }
         });
 
     },

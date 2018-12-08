@@ -30,8 +30,6 @@
 
                   <OpenApi> </OpenApi>
                   
-                </el-form>
-
             </el-tab-pane>
 
             </el-tabs>
