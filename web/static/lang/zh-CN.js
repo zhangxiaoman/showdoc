@@ -5,6 +5,7 @@ exports.default = {
     'demo' : '示例',
     'index_login_or_register' : '登录 / 注册',
     'my_item' : '我的项目',
+    'public_item' : '公开项目',
     'section_title1' : 'ShowDoc',
     'section_description1' : '一个非常适合IT团队的在线API文档、技术文档工具',
     'section_title2' : 'API文档',
